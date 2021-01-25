@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp10">
+
+
+    <LinearLayout
+        android:layout_width="@dimen/dp0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp50"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/messageName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:textSize="@dimen/sp15" />
+
+        <TextView
+            android:id="@+id/messageContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:autoLink="all"
+            android:background="@drawable/right_pop"
+            android:minWidth="@dimen/dp40"
+            android:padding="@dimen/dp10"
+            android:textColor="@color/white"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/sp17" />
+
+
+    </LinearLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/messageImageView"
+        android:layout_width="@dimen/dp40"
+        android:layout_height="@dimen/dp40" />
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tab_message"
+        android:enabled="true"
+        android:icon="@drawable/tab_message"
+        android:title="消息" />
+    <item
+        android:id="@+id/tab_contacts"
+        android:enabled="true"
+        android:icon="@drawable/tab_contacts"
+        android:title="联系人" />
+    <item
+        android:id="@+id/tab_moments"
+        android:enabled="true"
+        android:icon="@drawable/tab_moments"
+        android:title="朋友圈" />
+
+    <item
+        android:id="@+id/tab_my"
+        android:enabled="true"
+        android:icon="@drawable/tab_my"
+        android:title="我的" />
+
+</menu>

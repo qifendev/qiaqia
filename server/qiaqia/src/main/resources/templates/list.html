@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    　
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>List</title>
+</head>
+<script>
+    window.onload = load();
+
+    function load() {
+        setInterval(function () {
+            window.location.href = "/list";
+        }, 3000);
+    }
+</script>
+<body>
+<strong>在线用户</strong>
+<span th:text="${list.size()}"></span>
+<hr>
+<table border="1px">
+    <th>序号</th>
+    <th>地址</th>
+    <th>操作</th>
+    <tr th:each="item,li:${list}">
+        <td th:text="${li.count}"></td>
+        <td th:text="${li.current.key}"></td>
+        <td>
+            <a th:href="@{'/close?key='+${li.current.key}}">下线</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
