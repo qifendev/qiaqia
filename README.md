@@ -1,2 +1,2 @@
 # qiaqia
-聊天后台springboot +ａｐｐ【
+聊天后台socket spriungboot + 聊天app前台
