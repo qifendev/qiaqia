@@ -57,7 +57,7 @@ class ShowNewsActivity : BaseActivity() {
     }
 
 
-    override fun showToolbarBack()=true
+    override fun showToolbarBack() = true
 
 
     override fun initData() {

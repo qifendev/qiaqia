@@ -53,9 +53,7 @@ class MainActivity : BaseActivity() {
         toolbar?.title = App.username
 
 
-
-//        SocketOwner.send("2654299451@qq.com","你好")
-
+//        SocketOwner.send("858810078@qq.com", "你好")
 
 
     }

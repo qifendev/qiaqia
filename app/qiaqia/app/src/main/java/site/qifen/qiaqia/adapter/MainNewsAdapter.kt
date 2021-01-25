@@ -44,7 +44,17 @@ class MainNewsAdapter(private val messageList: List<Message>, val context: Conte
         val message: Message = messageList[position]
 
 
-        holder.newName.text = edit(message.messageTo)
+
+
+
+        if (message.messageFrom == message.messageTo) {
+            holder.newName.text = edit(message.messageTo)
+        } else if (message.messageFrom == App.username) {
+            holder.newName.text = edit(message.messageTo)
+        } else if (message.messageTo == App.username) {
+            holder.newName.text = edit(message.messageFrom)
+        }
+
 
         holder.newContent.text = edit(message.messageData)
         holder.newTime.text =

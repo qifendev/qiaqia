@@ -22,22 +22,21 @@ public interface MessageDao {
     @Query("select * from message")
     fun allMessage(): LiveData<List<Message>>
 
-    @Query("select * from message group by messageTo having max(messageId)")
+    @Query("select * from message group by messageTo != messageFrom having max(messageId)")
     fun mainNewsMessage(): LiveData<List<Message>>
 
     @Query("select * from message where messageFrom = :messageTo or messageTo = :messageTo and messageTo != messageFrom order by messageId asc")
     fun detailMessage(messageTo: String): LiveData<List<Message>>
 
     @Query("select * from message where messageFrom = :messageFrom and messageTo = :messageTo and messageTo = messageFrom order by messageId asc")
-    fun detailMineMessage(messageTo: String,messageFrom: String = App.username): LiveData<List<Message>>
+    fun detailMineMessage(
+        messageTo: String,
+        messageFrom: String = App.username
+    ): LiveData<List<Message>>
 
 }
 
 
-//master   8588
-
-//from     8588   to     2654
-//from     2654   to     8588
 
 
 

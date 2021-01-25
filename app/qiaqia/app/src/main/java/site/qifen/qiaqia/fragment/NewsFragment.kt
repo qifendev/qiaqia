@@ -42,7 +42,14 @@ class NewsFragment : BaseFragment() {
                     override fun onItemClick(position: Int) {
                         val message = it[position]
                         val intent = Intent(activity, ShowNewsActivity::class.java)
-                        intent.putExtra("to", message.messageTo)
+                        if (message.messageFrom == message.messageTo) {
+                            intent.putExtra("to", message.messageTo)
+                        } else if (message.messageFrom == App.username) {
+                            intent.putExtra("to", message.messageTo)
+                        } else if (message.messageTo == App.username) {
+                            intent.putExtra("to", message.messageFrom)
+                        }
+
 
                         startActivity(intent)
                     }
