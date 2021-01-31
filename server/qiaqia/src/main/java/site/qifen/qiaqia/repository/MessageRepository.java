@@ -11,12 +11,23 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Integer> {
 
 
-    Page<List<Message>> findMessagesByMessageFromAndMessageTo(String messageFrom, String messageTo, Pageable pageable);
+
 
     @Query(nativeQuery = true,value = "select * from message where message_state = 0 and message_from = ?1")
     List<Message> findUserUnReadMessage(String messageMail);
 
     @Query(nativeQuery = true,value = "update message set message_state = 1 and message_from = ?1")
     List<Message> readMessage(String messageMail);
+
+
+    @Query(nativeQuery = true, value = "select * from message where message_from = ?1 or message_to = ?1 and message_data like ?2")
+    List<Message> findMessage(String mail, String data);
+
+
+
+
+
+
+
 
 }

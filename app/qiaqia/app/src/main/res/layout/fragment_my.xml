@@ -3,14 +3,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/dp10"
+    android:orientation="vertical"
     tools:context=".fragment.MyFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/news_selector"
+        android:clickable="true"
+        android:focusable="true">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="@dimen/dp70"
-        android:layout_height="@dimen/dp70"
-        android:src="@mipmap/ic_launcher" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/myImageView"
+            android:layout_width="@dimen/dp70"
+            android:layout_height="@dimen/dp70"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/dp10"
+            android:src="@drawable/qiaqia" />
+
+
+        <TextView
+            android:id="@+id/myName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_toEndOf="@+id/myImageView"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="@string/app_name"
+            android:textColor="@color/minBlack"
+            android:textSize="@dimen/sp25" />
+
+        <TextView
+            android:id="@+id/myUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myName"
+            android:layout_toEndOf="@+id/myImageView"
+            android:ellipsize="end"
+            android:lines="2"
+            android:maxLines="2"
+            android:text="@string/app_name"
+            android:textSize="@dimen/sp15" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/news_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="管理好友"
+            android:textSize="@dimen/sp25" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/news_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="管理群"
+            android:textSize="@dimen/sp25" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/news_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/dp10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textSize="@dimen/sp25" />
+    </LinearLayout>
 
 
 </LinearLayout>

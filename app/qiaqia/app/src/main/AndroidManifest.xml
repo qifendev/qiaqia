@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Qiaqia"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.NotifyActivity" />
+        <activity android:name=".activity.EditActivity" />
         <activity android:name=".activity.FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +38,8 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan" />
 
         <service
             android:name=".socket.MessageService"

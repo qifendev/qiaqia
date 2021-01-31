@@ -22,6 +22,7 @@ import site.qifen.qiaqia.repository.UserRepository;
 
 import javax.annotation.Resource;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 @Service
@@ -41,7 +42,7 @@ public class Utils {
     }
 
     public Message json2Message(String message) {
-        return JSON.parseObject(message,Message.class);
+        return JSON.parseObject(message, Message.class);
     }
 
     public Result<String> getJwt(String password, String mail) {
@@ -135,6 +136,7 @@ public class Utils {
                     user.setUserMail(mail);
                     String encode = passwordEncoder.encode(password);
                     user.setUserPassword(encode);
+                    user.setUserFixTime(System.currentTimeMillis());
                     userRepository.save(user);
                     return success200("操作成功", null);
                 }
@@ -184,7 +186,15 @@ public class Utils {
         return new Result<>(400, message, null);
     }
 
+    public <T> Result<T> error400(String message, T data) {
+        return new Result<>(400, message, data);
+    }
+
     public Result<String> success200(String message, String data) {
+        return new Result<>(200, message, data);
+    }
+
+    public <T> Result<T> success200(String message, T data) {
         return new Result<>(200, message, data);
     }
 
@@ -192,6 +202,12 @@ public class Utils {
     public int getCode() {
         return new Random().nextInt(899999) + 100000;
     }
+
+    public String randomInt() {
+        return  ""+(new Random().nextInt(899999999)+100000000);
+    }
+
+
 
 
 }

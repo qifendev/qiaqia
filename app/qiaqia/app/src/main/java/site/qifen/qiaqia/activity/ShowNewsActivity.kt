@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.activity_show_news.*
 import kotlinx.android.synthetic.main.toolbar.*
 import site.qifen.qiaqia.*
 import site.qifen.qiaqia.adapter.NewsDetailAdapter
+import site.qifen.qiaqia.data.Message
 import site.qifen.qiaqia.socket.SocketOwner
 import site.qifen.qiaqia.viewmodel.DetailNewsViewModel
 
@@ -14,6 +15,7 @@ class ShowNewsActivity : BaseActivity() {
 
 
     private var messageTo: String? = null
+    private var type: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +29,7 @@ class ShowNewsActivity : BaseActivity() {
     override fun initView() {
         super.initView()
         messageTo = intent.getStringExtra("to")
+        type = intent.getIntExtra("type",0)
         toolbar?.title = messageTo
 
         val newsDetailViewModel = ViewModelProvider(this).get(DetailNewsViewModel::class.java)
@@ -44,7 +47,7 @@ class ShowNewsActivity : BaseActivity() {
             val text = text(sendText)
             if (notEmpty(text))
                 messageTo?.let { to ->
-                    SocketOwner.send(to, text)
+                    SocketOwner.send(to, text,messageType = type)
                     sendText.text = edit("")
                 }
 

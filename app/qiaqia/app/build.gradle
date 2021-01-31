@@ -116,4 +116,7 @@ dependencies {
     implementation "androidx.paging:paging-rxjava2-ktx:$paging_version"
     // For Kotlin use paging-rxjava2-ktx
 
+
+//    debugImplementation 'com.glance.guolindev:glance:1.0.0-alpha02'
+
 }

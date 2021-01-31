@@ -12,11 +12,11 @@
         android:enabled="true"
         android:icon="@drawable/tab_contacts"
         android:title="联系人" />
-    <item
-        android:id="@+id/tab_moments"
-        android:enabled="true"
-        android:icon="@drawable/tab_moments"
-        android:title="朋友圈" />
+    <!--    <item-->
+    <!--        android:id="@+id/tab_moments"-->
+    <!--        android:enabled="true"-->
+    <!--        android:icon="@drawable/tab_moments"-->
+    <!--        android:title="朋友圈" />-->
 
     <item
         android:id="@+id/tab_my"

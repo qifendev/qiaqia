@@ -3,13 +3,12 @@ package site.qifen.qiaqia.activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import kotlinx.android.synthetic.main.activity_forget.*
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import site.qifen.qiaqia.*
 import site.qifen.qiaqia.http.ApiService
-import site.qifen.qiaqia.http.UserRetrofit
+import site.qifen.qiaqia.http.HttpRetrofit
 import java.lang.Exception
 
 class ForgetActivity : BaseActivity() {
@@ -35,7 +34,7 @@ class ForgetActivity : BaseActivity() {
                 CoroutineScope(Dispatchers.Main).launch {
                     load()
                     try {
-                        val mail = ApiService.create(UserRetrofit::class.java)
+                        val mail = ApiService.create(HttpRetrofit::class.java)
                             .mail(text(forgetName))
                         if (mail.code == 200) {
                             object : CountDownTimer(60000, 1000) {
@@ -76,7 +75,7 @@ class ForgetActivity : BaseActivity() {
                 CoroutineScope(Dispatchers.Main).launch {
                     load()
                     try {
-                        val reg = ApiService.create(UserRetrofit::class.java)
+                        val reg = ApiService.create(HttpRetrofit::class.java)
                             .forget(
                                 text(forgetName),
                                 mailToken,

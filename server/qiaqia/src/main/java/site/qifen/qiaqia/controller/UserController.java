@@ -15,6 +15,7 @@ import site.qifen.qiaqia.data.User;
 import site.qifen.qiaqia.repository.UserRepository;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -74,6 +75,11 @@ public class UserController {
     @PostMapping("/forget")
     public Result<String> forget(@RequestParam String mail, @RequestParam int code, @RequestParam String token, @RequestParam String password) {
         return utils.parseForgetMailToken(token, mail, code, password);
+    }
+
+    @GetMapping("/findUser")
+    public Result<List<User>> user(@RequestParam(required = false) String text) {
+        return utils.success200("成功", userRepository.findUser("%" + text + "%"));
     }
 
 }

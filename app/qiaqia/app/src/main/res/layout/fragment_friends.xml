@@ -1,13 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<!--    <ListView-->
+<!--        android:id="@+id/listView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="vertical"
     tools:context=".fragment.FriendsFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/friendNotify"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:background="@drawable/news_selector"-->
+        <!--            android:clickable="true"-->
+        <!--            android:focusable="true"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:padding="@dimen/dp10">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="通知"-->
+        <!--                android:textSize="@dimen/sp25" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/friendNotifyNum"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_alignParentEnd="true"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_margin="@dimen/dp10"-->
+        <!--                android:background="@drawable/pop_num"-->
+        <!--                android:gravity="center"-->
+        <!--                android:minWidth="@dimen/dp20"-->
+        <!--                android:minHeight="@dimen/dp20"-->
+        <!--                android:text="8"-->
+        <!--                android:textColor="@color/white"-->
+        <!--                android:textSize="@dimen/sp15" />-->
+
+
+        <!--        </RelativeLayout>-->
+
+        <RadioGroup
+            android:id="@+id/friendGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/friendRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="好友" />
+
+            <RadioButton
+                android:id="@+id/groupRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="群聊" />
+        </RadioGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/friendRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp10"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+

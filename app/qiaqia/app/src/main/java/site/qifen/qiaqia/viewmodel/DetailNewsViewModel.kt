@@ -12,7 +12,7 @@ class DetailNewsViewModel : ViewModel() {
     private lateinit var newsDetail: LiveData<List<Message>>
 
     fun syncDetailNews(messageFrom: String): LiveData<List<Message>> {
-        newsDetail= if (messageFrom == App.username) {
+        newsDetail = if (messageFrom == App.username) {
             QiaDatabase.instance.messageDao().detailMineMessage(messageFrom)
         } else {
             QiaDatabase.instance.messageDao().detailMessage(messageFrom)

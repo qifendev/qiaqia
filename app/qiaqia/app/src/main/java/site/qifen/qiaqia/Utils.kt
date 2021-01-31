@@ -19,6 +19,8 @@ import androidx.core.app.NotificationCompat
 import site.qifen.qiaqia.activity.MainActivity
 import site.qifen.qiaqia.activity.ShowNewsActivity
 import site.qifen.qiaqia.data.Message
+import site.qifen.qiaqia.data.QiaDatabase
+import site.qifen.qiaqia.data.User
 import java.util.*
 
 
@@ -43,7 +45,7 @@ fun t(text: String) {
 fun edit(text: String): Editable = Editable.Factory.getInstance().newEditable(text)
 
 
-fun notEmpty(text: String): Boolean = !TextUtils.isEmpty(text)
+fun notEmpty(text: String?): Boolean = text != null && !TextUtils.isEmpty(text)
 
 
 fun <T : TextView> text(view: T) = view.text.toString()
@@ -82,7 +84,7 @@ fun createNotification(
     var intent = Intent(App.context, MainActivity::class.java)
     if (!isService) {
         intent = Intent(App.context, ShowNewsActivity::class.java)
-        intent.putExtra("to", title )
+        intent.putExtra("to", title)
     }
     return NotificationCompat.Builder(App.context, id)
         .setContentTitle(title)
@@ -122,6 +124,19 @@ fun fromMine(message: Message) = when {
     message.messageTo == App.username -> false
     message.messageFrom == message.messageTo -> true
     else -> false
+}
+
+
+fun insertNotEq(userList: List<User>) {
+    val userDao = QiaDatabase.instance.userDao()
+    if (userList.isNotEmpty()) {
+        for (user: User in userList) {
+            if (!userDao.ifEqUser(user.userMail!!, user.userFixTime)) {
+                userDao.dropUser(user.userMail!!)
+                userDao.insertUser(user)
+            }
+        }
+    }
 }
 
 

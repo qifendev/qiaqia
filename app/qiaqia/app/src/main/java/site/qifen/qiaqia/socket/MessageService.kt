@@ -65,15 +65,15 @@ class MessageService : Service(), SocketLifecycle {
     override fun onMessage(message: Message) {
 //        socketLifecycle?.onMessage(message)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = createChannel("Message", "message")
-                notificationManager.createNotificationChannel(channel)
-                val notification: Notification =
-                    createNotification(
-                        message.messageTo,
-                        message.messageData,
-                        "message",false
-                    )
-                notificationManager.notify(random(), notification)
+            val channel = createChannel("Message", "message")
+            notificationManager.createNotificationChannel(channel)
+            val notification: Notification =
+                createNotification(
+                    message.messageTo,
+                    message.messageData,
+                    "message", false
+                )
+            notificationManager.notify(random(), notification)
         }
     }
 
@@ -88,7 +88,7 @@ class MessageService : Service(), SocketLifecycle {
         notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val channel = createChannel(channelName, channelId)
         notificationManager.createNotificationChannel(channel)
-        val notification: Notification = createNotification("恰恰", "恰恰运行中", channelId,true)
+        val notification: Notification = createNotification("恰恰", "恰恰运行中", channelId, true)
         startForeground(1, notification)
         val socketThread = SocketThread()
         socketThread.start()
@@ -156,10 +156,11 @@ class MessageService : Service(), SocketLifecycle {
                         val textMessage = DataInputStream(socket.getInputStream()).readUTF()
                         val message =
                             Gson().fromJson(textMessage, Message::class.java)
+                        this@MessageService.onMessage(message)
+                        println("socket read: " + Gson().toJson(textMessage))
+                        QiaDatabase.instance.messageDao().insertMessage(message)
                         if (message.messageType == 2) {
-                            println("socket read: " + Gson().toJson(textMessage))
-                            this@MessageService.onMessage(message)
-                            QiaDatabase.instance.messageDao().insertMessage(message)
+
                         }
                     }
                 }

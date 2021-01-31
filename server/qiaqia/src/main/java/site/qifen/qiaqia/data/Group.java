@@ -10,18 +10,21 @@ public class Group implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer groupId; //唯一id
 
-    Integer groupHold; //群持有者id
+    String groupHold; //群持有者id
 
     String groupName; //群名
 
+    String groupNickName; //群名
+
     String groupSignature; //群签名
 
-    Integer groupSlave; //群友id
+    String groupSlave; //群友id
 
     Integer groupTag; //标示
 
-    public Group() {
-    }
+    Long groupFixTime;
+    Long groupTime;
+
 
     public Integer getGroupId() {
         return groupId;
@@ -31,11 +34,11 @@ public class Group implements Serializable {
         this.groupId = groupId;
     }
 
-    public Integer getGroupHold() {
+    public String getGroupHold() {
         return groupHold;
     }
 
-    public void setGroupHold(Integer groupHold) {
+    public void setGroupHold(String groupHold) {
         this.groupHold = groupHold;
     }
 
@@ -47,6 +50,14 @@ public class Group implements Serializable {
         this.groupName = groupName;
     }
 
+    public String getGroupNickName() {
+        return groupNickName;
+    }
+
+    public void setGroupNickName(String groupNickName) {
+        this.groupNickName = groupNickName;
+    }
+
     public String getGroupSignature() {
         return groupSignature;
     }
@@ -55,11 +66,11 @@ public class Group implements Serializable {
         this.groupSignature = groupSignature;
     }
 
-    public Integer getGroupSlave() {
+    public String getGroupSlave() {
         return groupSlave;
     }
 
-    public void setGroupSlave(Integer groupSlave) {
+    public void setGroupSlave(String groupSlave) {
         this.groupSlave = groupSlave;
     }
 
@@ -69,5 +80,21 @@ public class Group implements Serializable {
 
     public void setGroupTag(Integer groupTag) {
         this.groupTag = groupTag;
+    }
+
+    public Long getGroupFixTime() {
+        return groupFixTime;
+    }
+
+    public void setGroupFixTime(Long groupFixTime) {
+        this.groupFixTime = groupFixTime;
+    }
+
+    public Long getGroupTime() {
+        return groupTime;
+    }
+
+    public void setGroupTime(Long groupTime) {
+        this.groupTime = groupTime;
     }
 }

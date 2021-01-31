@@ -2,11 +2,23 @@ package site.qifen.qiaqia.activity
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.util.SparseArray
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.SearchView
+import android.widget.SimpleAdapter
+import android.widget.SimpleCursorAdapter
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
@@ -15,21 +27,17 @@ import kotlinx.android.synthetic.main.toolbar.*
 import site.qifen.qiaqia.App
 import site.qifen.qiaqia.R
 import site.qifen.qiaqia.adapter.FragmentAdapter
-import site.qifen.qiaqia.data.Message
+import site.qifen.qiaqia.adapter.MainNewsAdapter
 import site.qifen.qiaqia.fragment.FriendsFragment
-import site.qifen.qiaqia.fragment.MomentsFragment
 import site.qifen.qiaqia.fragment.MyFragment
 import site.qifen.qiaqia.fragment.NewsFragment
-import site.qifen.qiaqia.socket.SocketLifecycle
 import site.qifen.qiaqia.socket.SocketOwner
-import java.lang.Exception
-import java.net.Socket
+import site.qifen.qiaqia.t
+import java.util.*
 
 
 class MainActivity : BaseActivity() {
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,11 +59,69 @@ class MainActivity : BaseActivity() {
     override fun initView() {
         super.initView()
         toolbar?.title = App.username
+        toolbar?.overflowIcon = ContextCompat.getDrawable(this, R.drawable.main_tool)
 
 
 //        SocketOwner.send("858810078@qq.com", "你好")
+//
+//        SocketOwner.send(
+//            App.username,
+//            "",
+//            messageType = MESSAGE_ADD_FRIEND
+//        )
 
 
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
+//        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
+//        searchView.queryHint = "搜搜"
+//        searchView.isSubmitButtonEnabled = true
+//        searchView.isFocusable = true
+//        searchView.onActionViewExpanded()
+//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+////                t(query!!)
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                return true
+//            }
+//        })
+//
+//
+//        searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+//            if (hasFocus) {
+//                searchView.requestFocus()
+//                searchView.requestFocusFromTouch()
+//                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+//            } else {
+//                hideKeyBoard(searchView)
+//            }
+//        }
+
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.main_search -> startActivity(Intent(this, SearchActivity::class.java))
+            R.id.main_add -> {
+                startActivity(Intent(this, SearchActivity::class.java))
+            }
+            R.id.main_create_group -> {
+                val intent = Intent(this, EditActivity::class.java)
+                intent.putExtra("option", 1)
+                intent.putExtra("info", "填写群名")
+                startActivity(intent)
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
@@ -63,9 +129,9 @@ class MainActivity : BaseActivity() {
         val sparseArray = SparseArray<Fragment>()
         sparseArray.put(0, NewsFragment())
         sparseArray.put(1, FriendsFragment())
-        sparseArray.put(2, MomentsFragment())
-        sparseArray.put(3, MyFragment())
-        viewpager2.offscreenPageLimit = 3
+//        sparseArray.put(2, MomentsFragment())
+        sparseArray.put(2, MyFragment())
+        viewpager2.offscreenPageLimit = 2
         viewpager2.orientation = ORIENTATION_HORIZONTAL
         viewpager2.adapter = FragmentAdapter(this, sparseArray)
 
@@ -80,8 +146,8 @@ class MainActivity : BaseActivity() {
             when (it.itemId) {
                 R.id.tab_message -> viewpager2.setCurrentItem(0, true)
                 R.id.tab_contacts -> viewpager2.setCurrentItem(1, true)
-                R.id.tab_moments -> viewpager2.setCurrentItem(2, true)
-                R.id.tab_my -> viewpager2.setCurrentItem(3, true)
+//                R.id.tab_moments -> viewpager2.setCurrentItem(2, true)
+                R.id.tab_my -> viewpager2.setCurrentItem(2, true)
             }
             true
         }

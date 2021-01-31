@@ -5,6 +5,8 @@ import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -30,13 +32,18 @@ abstract class BaseActivity : AppCompatActivity(), SocketLifecycle {
         get() = this.javaClass.name
 
 
-
-
     lateinit var messageService: MessageService.IBinder
 
 
     open fun enableFull(): Boolean {
         return false
+    }
+
+    fun hideKeyBoard(view: View) {
+        val input = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (input.isActive) {
+            input.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
 
@@ -73,7 +80,6 @@ abstract class BaseActivity : AppCompatActivity(), SocketLifecycle {
 
             }
         }
-
 
 
     }
@@ -218,9 +224,6 @@ abstract class BaseActivity : AppCompatActivity(), SocketLifecycle {
         )
 
     }
-
-
-
 
 
 }

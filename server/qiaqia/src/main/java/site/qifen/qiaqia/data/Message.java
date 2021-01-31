@@ -10,13 +10,14 @@ public class Message implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer messageId; //消息id
     String messageFrom;  //发送者
-    Long messageTime;  //日期
     String messageTo;  //接收者
-    Integer messageType; // 1确认身份  2私聊   3群聊
+    Long messageTime;  //日期
+    Integer messageType; // 1确认身份  2私聊   3加好友
     String messageData; //数据内容
-    Integer messageState; // -1发送失败  0发送成功未读   1发送成功已读
+    Integer messageState; // 消息 》 -1发送失败  0发送成功未读   1发送成功已读 ---------  好友  》 0好友申请方from   1同意好友申请to
 
     public Message() {
+
     }
 
 
@@ -75,4 +76,27 @@ public class Message implements Serializable {
     public void setMessageData(String messageData) {
         this.messageData = messageData;
     }
+
+
+    //发送状态
+    @Transient
+    public final static int MESSAGE_FAIL = -1; //发送消息失败
+    @Transient
+    public final static int MESSAGE_NOT_READ = 0; //发送消息成功但是对方未在线
+    @Transient
+    public final static int MESSAGE_READ = 1; //发送消息成功并且已读
+
+    //发送类型
+    @Transient
+    public final static int MESSAGE_TOKEN = 1; //确认身份
+    @Transient
+    public final static int MESSAGE_FRIEND = 2; //私聊
+    @Transient
+    public final static int MESSAGE_GROUP = 3; //群聊
+    @Transient
+    public final static int MESSAGE_ADD_FRIEND = 4; //加好友
+    @Transient
+    public final static int MESSAGE_ADD_GROUP = 5; //加群
+
+
 }

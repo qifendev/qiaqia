@@ -1,7 +1,6 @@
 package site.qifen.qiaqia.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
-import site.qifen.qiaqia.App
-import site.qifen.qiaqia.R
-import site.qifen.qiaqia.activity.ShowNewsActivity
+import site.qifen.qiaqia.*
 import site.qifen.qiaqia.data.Message
-import site.qifen.qiaqia.edit
-import site.qifen.qiaqia.fromMine
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,13 +41,22 @@ class MainNewsAdapter(private val messageList: List<Message>, val context: Conte
 
 
 
-
-        if (message.messageFrom == message.messageTo) {
-            holder.newName.text = edit(message.messageTo)
-        } else if (message.messageFrom == App.username) {
-            holder.newName.text = edit(message.messageTo)
-        } else if (message.messageTo == App.username) {
-            holder.newName.text = edit(message.messageFrom)
+        if (message.messageType == MESSAGE_FRIEND) {
+            if (message.messageFrom == message.messageTo) {
+                holder.newName.text =message.messageTo
+            } else if (message.messageFrom == App.username) {
+                holder.newName.text =message.messageTo
+            } else if (message.messageTo == App.username) {
+                holder.newName.text =message.messageFrom
+            }
+        } else if (message.messageType == MESSAGE_GROUP) {
+            if (message.messageFrom == App.username) {
+                holder.newName.text =message.messageTo
+            } else if (message.messageTo == App.username) {
+                holder.newName.text =message.messageFrom
+            } else {
+                holder.newName.text =message.messageTo
+            }
         }
 
 

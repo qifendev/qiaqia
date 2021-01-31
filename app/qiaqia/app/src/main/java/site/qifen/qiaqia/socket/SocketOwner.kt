@@ -2,11 +2,9 @@ package site.qifen.qiaqia.socket
 
 import android.text.TextUtils
 import com.google.gson.Gson
-import site.qifen.qiaqia.App
+import site.qifen.qiaqia.*
 import site.qifen.qiaqia.data.Message
 import site.qifen.qiaqia.data.QiaDatabase
-import site.qifen.qiaqia.fromMine
-import site.qifen.qiaqia.readPreference
 import java.io.DataOutputStream
 import java.io.StringReader
 import java.lang.Exception
@@ -34,7 +32,7 @@ object SocketOwner {
                 )
                 dataOutputStream.flush()
 
-                if (!TextUtils.equals(messageTo, App.username))
+                if (!TextUtils.equals(messageTo, App.username) && messageType== MESSAGE_FRIEND)
                     QiaDatabase.instance.messageDao().insertMessage(message)
 
 

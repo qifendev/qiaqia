@@ -10,11 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_news.*
 import site.qifen.qiaqia.App
+import site.qifen.qiaqia.MESSAGE_FRIEND
+import site.qifen.qiaqia.MESSAGE_GROUP
 import site.qifen.qiaqia.R
 import site.qifen.qiaqia.activity.ShowNewsActivity
 import site.qifen.qiaqia.adapter.MainNewsAdapter
-import site.qifen.qiaqia.edit
-import site.qifen.qiaqia.fromMine
 import site.qifen.qiaqia.viewmodel.MainNewsViewModel
 
 
@@ -42,13 +42,28 @@ class NewsFragment : BaseFragment() {
                     override fun onItemClick(position: Int) {
                         val message = it[position]
                         val intent = Intent(activity, ShowNewsActivity::class.java)
-                        if (message.messageFrom == message.messageTo) {
-                            intent.putExtra("to", message.messageTo)
-                        } else if (message.messageFrom == App.username) {
-                            intent.putExtra("to", message.messageTo)
-                        } else if (message.messageTo == App.username) {
-                            intent.putExtra("to", message.messageFrom)
+                        if (message.messageType == MESSAGE_FRIEND) {
+                            if (message.messageFrom == message.messageTo) {
+                                intent.putExtra("to", message.messageTo)
+                            } else if (message.messageFrom == App.username) {
+                                intent.putExtra("to", message.messageTo)
+                            } else if (message.messageTo == App.username) {
+                                intent.putExtra("to", message.messageFrom)
+                            }
+                        } else if (message.messageType == MESSAGE_GROUP) {
+                            if (message.messageFrom == App.username) {
+                                intent.putExtra("to", message.messageTo)
+                            } else if (message.messageTo == App.username) {
+                                intent.putExtra("to", message.messageFrom)
+                            } else {
+                                intent.putExtra("to", message.messageTo)
+                            }
+
+
                         }
+
+
+                        intent.putExtra("type", message.messageType)
 
 
                         startActivity(intent)

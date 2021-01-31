@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SearchActivity">
+
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/purple_700"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <RadioGroup
+        android:id="@+id/findRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp10"
+        android:paddingEnd="@dimen/dp10">
+
+        <RadioButton
+            android:id="@+id/findFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查朋友" />
+
+        <RadioButton
+            android:id="@+id/findGroups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查群" />
+
+        <RadioButton
+            android:id="@+id/findChats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查聊天" />
+    </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/findRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</LinearLayout>

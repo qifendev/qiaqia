@@ -1,25 +1,15 @@
 package site.qifen.qiaqia.activity
 
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
-import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_forget.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.*
 import site.qifen.qiaqia.*
-import site.qifen.qiaqia.data.Message
-import site.qifen.qiaqia.http.UserRetrofit
+import site.qifen.qiaqia.http.HttpRetrofit
 import site.qifen.qiaqia.http.ApiService
-import site.qifen.qiaqia.socket.MessageService
-import java.io.DataOutputStream
 import java.lang.Exception
-import java.net.Socket
 import java.util.*
 
 
@@ -58,7 +48,7 @@ class LoginActivity : BaseActivity() {
                 CoroutineScope(Dispatchers.Main).launch {
                     load()
                     try {
-                        val login = ApiService.create(UserRetrofit::class.java).login(name, pass)
+                        val login = ApiService.create(HttpRetrofit::class.java).login(name, pass)
                         if (login.code == 200) {
 
                             App.token = login.data

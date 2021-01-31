@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import site.qifen.qiaqia.*
 import site.qifen.qiaqia.http.ApiService
-import site.qifen.qiaqia.http.UserRetrofit
+import site.qifen.qiaqia.http.HttpRetrofit
 import java.lang.Exception
 
 class RegisterActivity : BaseActivity() {
@@ -36,7 +36,7 @@ class RegisterActivity : BaseActivity() {
                 CoroutineScope(Dispatchers.Main).launch {
                     load()
                     try {
-                        val mail = ApiService.create(UserRetrofit::class.java)
+                        val mail = ApiService.create(HttpRetrofit::class.java)
                             .mail(text(registerName))
                         if (mail.code == 200) {
                             object : CountDownTimer(60000, 1000) {
@@ -78,7 +78,7 @@ class RegisterActivity : BaseActivity() {
                 CoroutineScope(Dispatchers.Main).launch {
                     load()
                     try {
-                        val reg = ApiService.create(UserRetrofit::class.java)
+                        val reg = ApiService.create(HttpRetrofit::class.java)
                             .reg(
                                 text(registerName),
                                 mailToken,

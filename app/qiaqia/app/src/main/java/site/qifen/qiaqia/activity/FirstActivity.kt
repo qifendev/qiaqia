@@ -1,15 +1,13 @@
 package site.qifen.qiaqia.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import site.qifen.qiaqia.*
 import site.qifen.qiaqia.http.ApiService
-import site.qifen.qiaqia.http.UserRetrofit
+import site.qifen.qiaqia.http.HttpRetrofit
 import java.lang.Exception
 
 class FirstActivity : BaseActivity() {
@@ -27,7 +25,7 @@ class FirstActivity : BaseActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
                     val token =
-                        ApiService.create(UserRetrofit::class.java).token(App.token)
+                        ApiService.create(HttpRetrofit::class.java).token(App.token)
                     if (token.code == 200) {
                         startMessageService()
                         startActivity(Intent(this@FirstActivity, MainActivity::class.java))
@@ -39,7 +37,7 @@ class FirstActivity : BaseActivity() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                     t(e.message.toString())
-                    startActivity(Intent(this@FirstActivity, LoginActivity::class.java))
+                    startActivity(Intent(this@FirstActivity, MainActivity::class.java))
                     finish()
                 }
             }

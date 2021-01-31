@@ -1,7 +1,6 @@
 package site.qifen.qiaqia;
 
 import com.alibaba.fastjson.JSON;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -9,15 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import site.qifen.qiaqia.data.Friend;
+import site.qifen.qiaqia.data.Group;
 import site.qifen.qiaqia.data.Message;
+import site.qifen.qiaqia.repository.FriendRepository;
+import site.qifen.qiaqia.repository.GroupRepository;
 import site.qifen.qiaqia.repository.MessageRepository;
 
 import javax.annotation.Resource;
 import java.io.*;
 import java.net.*;
-import java.sql.Time;
-import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,10 +36,13 @@ public class ServerSocketMain implements ApplicationRunner {
 
     @Resource
     MessageRepository messageRepository;
+    @Resource
+    FriendRepository friendRepository;
 
+    @Resource
+    GroupRepository groupRepository;
     @Override
     public void run(ApplicationArguments args) {
-
 
 
         try {
@@ -97,7 +101,7 @@ public class ServerSocketMain implements ApplicationRunner {
                     Message message = utils.json2Message(s);
                     Integer messageType = message.getMessageType();
                     String messageTo = message.getMessageTo();
-                    if (messageType == 1) { //验证身份
+                    if (messageType == Message.MESSAGE_TOKEN) { //验证身份
                         name = utils.jwtIsOk(message.getMessageFrom());
                         System.out.println("socket connect " + name);
                         concurrentHashMap.put(name, this);
@@ -108,31 +112,44 @@ public class ServerSocketMain implements ApplicationRunner {
 //                            dataOutputStream.writeUTF(JSON.toJSONString(message1));
 //                        }
 //                        messageRepository.readMessage(name);
-
-
                     }
 
+                    System.out.println("message " + s);
 
-
-
-                    if (messageType == 2) {
+                    if (messageType == Message.MESSAGE_FRIEND) {
                         if (concurrentHashMap.containsKey(messageTo)) {
-
 //                            String messageFrom = message.getMessageFrom();
 //                            message.setMessageFrom(message.getMessageTo());
 //                            message.setMessageTo(messageFrom);
-
                             DataOutputStream dataOutputStream = new DataOutputStream(concurrentHashMap.get(messageTo).socket.getOutputStream());
-
                             dataOutputStream.writeUTF(JSON.toJSONString(message));
-                            System.out.println("write " + JSON.toJSONString(message));
                             dataOutputStream.flush();
-                            message.setMessageState(1);
+                            message.setMessageState(Message.MESSAGE_READ);
                         } else {
-                            message.setMessageState(0);
+                            message.setMessageState(Message.MESSAGE_NOT_READ);
                         }
                         messageRepository.save(message);
+                    } else if (messageType == Message.MESSAGE_GROUP) {
+                        List<Group> groupsByGroupSlave = groupRepository.findGroupsByGroupName(messageTo);
+                        for (Group group :groupsByGroupSlave) {
+                            if (concurrentHashMap.containsKey(group.getGroupSlave())) {
+                                DataOutputStream dataOutputStream = new DataOutputStream(concurrentHashMap.get(group.getGroupSlave()).socket.getOutputStream());
+                                dataOutputStream.writeUTF(JSON.toJSONString(message));
+                                dataOutputStream.flush();
+                                message.setMessageState(Message.MESSAGE_READ);
+                            } else {
+                                message.setMessageState(Message.MESSAGE_NOT_READ);
+                            }
+                            messageRepository.save(message);
+                        }
+
                     }
+//                    else if (messageType == Message.MESSAGE_ADD_FRIEND) {
+//
+//                    } else if (messageType == Message.MESSAGE_ADD_GROUP) {
+//
+//                    }
+
                 }
             } catch (SocketException e) {
                 System.out.println("socket exception" + name);

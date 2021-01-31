@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/news_selector"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/friendImageView"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/dp10" />
+
+
+    <TextView
+        android:id="@+id/friendName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_toEndOf="@+id/friendImageView"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLines="1"
+        android:textColor="@color/minBlack"
+        android:textSize="@dimen/sp19" />
+
+    <TextView
+        android:id="@+id/friendContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friendName"
+        android:layout_toEndOf="@+id/friendImageView"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLines="1"
+        android:textSize="@dimen/sp15" />
+
+
+    <Button
+        android:id="@+id/friendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dp10"
+        android:text="同意" />
+
+</RelativeLayout>
