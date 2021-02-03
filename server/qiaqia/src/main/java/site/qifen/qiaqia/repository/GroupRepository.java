@@ -32,6 +32,8 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
     boolean existsGroupByGroupNameAndGroupSlave(String groupName,String groupSlave);
 
     List<Group> findGroupsByGroupHold(String groupHold);
+
+
     List<Group> findGroupsByGroupName(String groupName);
 
 

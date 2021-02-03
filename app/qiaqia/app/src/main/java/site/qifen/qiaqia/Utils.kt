@@ -127,17 +127,6 @@ fun fromMine(message: Message) = when {
 }
 
 
-fun insertNotEq(userList: List<User>) {
-    val userDao = QiaDatabase.instance.userDao()
-    if (userList.isNotEmpty()) {
-        for (user: User in userList) {
-            if (!userDao.ifEqUser(user.userMail!!, user.userFixTime)) {
-                userDao.dropUser(user.userMail!!)
-                userDao.insertUser(user)
-            }
-        }
-    }
-}
 
 
 

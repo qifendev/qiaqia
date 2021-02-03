@@ -21,6 +21,7 @@ public class Message implements Serializable {
     }
 
 
+
     public Integer getMessageState() {
         return messageState;
     }
@@ -82,9 +83,11 @@ public class Message implements Serializable {
     @Transient
     public final static int MESSAGE_FAIL = -1; //发送消息失败
     @Transient
-    public final static int MESSAGE_NOT_READ = 0; //发送消息成功但是对方未在线
+    public final static int MESSAGE_NOT_SEND = 0; //发送消息成功但是对方未在线
     @Transient
-    public final static int MESSAGE_READ = 1; //发送消息成功并且已读
+    public final static int MESSAGE_SEND = 1; //发送消息成功
+
+    public final static int MESSAGE_READ = 2; //发送消息成功并且已读
 
     //发送类型
     @Transient
@@ -93,10 +96,10 @@ public class Message implements Serializable {
     public final static int MESSAGE_FRIEND = 2; //私聊
     @Transient
     public final static int MESSAGE_GROUP = 3; //群聊
-    @Transient
-    public final static int MESSAGE_ADD_FRIEND = 4; //加好友
-    @Transient
-    public final static int MESSAGE_ADD_GROUP = 5; //加群
+//    @Transient
+//    public final static int MESSAGE_ADD_FRIEND = 4; //加好友
+//    @Transient
+//    public final static int MESSAGE_ADD_GROUP = 5; //加群
 
 
 }

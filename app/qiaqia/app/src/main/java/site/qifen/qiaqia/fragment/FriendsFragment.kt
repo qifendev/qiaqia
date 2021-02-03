@@ -19,8 +19,10 @@ import site.qifen.qiaqia.adapter.FriendsAdapter
 import site.qifen.qiaqia.adapter.GroupsAdapter
 import site.qifen.qiaqia.adapter.MainGroupsAdapter
 import site.qifen.qiaqia.data.Friend
+import site.qifen.qiaqia.data.QiaDatabase
 import site.qifen.qiaqia.http.ApiService
 import site.qifen.qiaqia.http.HttpRetrofit
+import site.qifen.qiaqia.t
 
 
 class FriendsFragment : BaseFragment() {
@@ -50,7 +52,7 @@ class FriendsFragment : BaseFragment() {
 
         friendGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-               R.id.friendRadio -> {
+                R.id.friendRadio -> {
                     friendOption = 1
                     initRecycler()
                 }
@@ -91,26 +93,30 @@ class FriendsFragment : BaseFragment() {
 
     private fun initRecycler() {
         CoroutineScope(Dispatchers.Main).launch {
-            val httpRetrofit = ApiService.create(HttpRetrofit::class.java)
-            if (friendOption == 1) {
-                val data = httpRetrofit.myFriends(username)
-                if (data.code == 200 && data.data.isNotEmpty()) {
-                    val friendsAdapter = FriendsAdapter(data.data, activity as Context)
-                    friendRecyclerView.adapter = friendsAdapter
+            try {
+                val httpRetrofit = ApiService.create(HttpRetrofit::class.java)
+                if (friendOption == 1) {
+                    val data = httpRetrofit.myFriends(username)
+                    if (data.code == 200 && data.data.isNotEmpty()) {
+                        val friendsAdapter = FriendsAdapter(data.data, activity as Context)
+                        friendRecyclerView.adapter = friendsAdapter
 //                    friendsAdapter.setOnItemClickListener(object :FriendsAdapter.OnItemClickListener {
 //                        override fun onItemClick(position: Int) {
 //
 //                        }
 //                    })
-                }
+                    }
 
-            } else if (friendOption == 2) {
-                val myGroup = httpRetrofit.myGroup(username)
-                if (myGroup.code == 200&& myGroup.data.isNotEmpty()) {
-                    friendRecyclerView.adapter = MainGroupsAdapter(myGroup.data,activity as Context)
+                } else if (friendOption == 2) {
+                    val myGroup = httpRetrofit.myGroup(username)
+                    if (myGroup.code == 200 && myGroup.data.isNotEmpty()) {
+                        friendRecyclerView.adapter =
+                            MainGroupsAdapter(myGroup.data, activity as Context)
+                    }
                 }
+            } catch (e: Exception) {
+                e.message?.let { t(it) }
             }
-
         }
     }
 

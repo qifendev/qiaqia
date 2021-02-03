@@ -36,22 +36,25 @@ interface MessageDao {
     @Query("select * from message")
     fun allMessage(): LiveData<List<Message>>
 
-    @Query("select * from message  group by messageTo  having max(messageId)")
+    //    select * from message  group by   messageTo  having max(messageId)
+    @Query("select * from message where messageTo != (select messageTo from message group by messageTo having max(messageTime)) group by messageTo having max(messageTime)")
+//    @Query("select * from message group by messageTo having max(messageTime)")
     fun mainNewsMessage(
 //        messageFriend: Int = MESSAGE_FRIEND, messageGroup: Int = MESSAGE_GROUP
+//        myMail: String = App.username
     ): LiveData<List<Message>>
 
 //    @Query("select distinct messageTo from message where max(messageId)")
 //    fun mainNewsMessage1(): LiveData<List<Message>>
 
-    @Query("select * from message where messageFrom = :messageTo or messageTo = :messageTo and messageTo != messageFrom and messageType = :messageFriend or messageType = :messageGroup order by messageId asc")
+    @Query("select * from message where messageFrom = :messageTo or messageTo = :messageTo and messageTo != messageFrom and messageType = :messageFriend or messageType = :messageGroup order by messageTime asc")
     fun detailMessage(
         messageTo: String,
         messageFriend: Int = MESSAGE_FRIEND,
         messageGroup: Int = MESSAGE_GROUP
     ): LiveData<List<Message>>
 
-    @Query("select * from message where messageFrom = :messageFrom and messageTo = :messageTo and messageTo = messageFrom and messageType = :messageFriend or messageType = :messageGroup  order by messageId asc")
+    @Query("select * from message where messageFrom = :messageFrom and messageTo = :messageTo and messageTo = messageFrom and messageType = :messageFriend or messageType = :messageGroup  order by messageTime asc")
     fun detailMineMessage(
         messageTo: String,
         messageFrom: String = App.username,

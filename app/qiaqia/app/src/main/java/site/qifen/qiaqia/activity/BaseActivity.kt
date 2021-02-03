@@ -98,26 +98,7 @@ abstract class BaseActivity : AppCompatActivity(), SocketLifecycle {
     }
 
 
-    inner class Send(var socket: Socket) : Thread() {
 
-        override fun run() {
-            super.run()
-            val dataOutputStream = DataOutputStream(socket.getOutputStream())
-            dataOutputStream.writeUTF(
-                Gson().toJson(
-                    Message(
-                        readPreference("token"),
-                        "858810078@qq.com",
-                        Date().time,
-                        2,
-                        "我是消息我发送来了",
-                        1
-                    )
-                ).toString()
-            )
-            dataOutputStream.flush()
-        }
-    }
 
 
     open fun showToolbarBack(): Boolean {

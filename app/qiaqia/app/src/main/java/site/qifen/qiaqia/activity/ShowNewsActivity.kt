@@ -29,7 +29,7 @@ class ShowNewsActivity : BaseActivity() {
     override fun initView() {
         super.initView()
         messageTo = intent.getStringExtra("to")
-        type = intent.getIntExtra("type",0)
+        type = intent.getIntExtra("type", 0)
         toolbar?.title = messageTo
 
         val newsDetailViewModel = ViewModelProvider(this).get(DetailNewsViewModel::class.java)
@@ -47,7 +47,7 @@ class ShowNewsActivity : BaseActivity() {
             val text = text(sendText)
             if (notEmpty(text))
                 messageTo?.let { to ->
-                    SocketOwner.send(to, text,messageType = type)
+                    SocketOwner.send(to, text, messageType = type)
                     sendText.text = edit("")
                 }
 

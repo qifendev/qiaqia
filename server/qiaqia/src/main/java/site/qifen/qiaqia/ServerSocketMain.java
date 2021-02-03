@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import site.qifen.qiaqia.data.Friend;
 import site.qifen.qiaqia.data.Group;
 import site.qifen.qiaqia.data.Message;
 import site.qifen.qiaqia.repository.FriendRepository;
@@ -41,6 +40,7 @@ public class ServerSocketMain implements ApplicationRunner {
 
     @Resource
     GroupRepository groupRepository;
+
     @Override
     public void run(ApplicationArguments args) {
 
@@ -94,7 +94,7 @@ public class ServerSocketMain implements ApplicationRunner {
         }
 
         @Override
-        public void run() {
+        public  void run() {
             try {
                 while (connect >= 0) { //验证身份并且没有异常才连接
                     String s = new DataInputStream(socket.getInputStream()).readUTF();
@@ -103,43 +103,53 @@ public class ServerSocketMain implements ApplicationRunner {
                     String messageTo = message.getMessageTo();
                     if (messageType == Message.MESSAGE_TOKEN) { //验证身份
                         name = utils.jwtIsOk(message.getMessageFrom());
-                        System.out.println("socket connect " + name);
                         concurrentHashMap.put(name, this);
                         connect = 1;
+                        System.out.println("socket connect " + name);
 
-//                        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-//                        for (Message message1: messageRepository.findUserUnReadMessage(name)){
-//                            dataOutputStream.writeUTF(JSON.toJSONString(message1));
-//                        }
-//                        messageRepository.readMessage(name);
                     }
+
+                    List<Message> userUnReadMessage = messageRepository.findUserUnReadMessage(name);
+                    if (!userUnReadMessage.isEmpty()) {
+                        for (Message message1: userUnReadMessage){
+                            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                            if (message1.getMessageType() == Message.MESSAGE_FRIEND) {
+                                System.out.println("unread message to" + name + " ->" + JSON.toJSONString(message1));
+                                dataOutputStream.writeUTF(JSON.toJSONString(message1));
+                                dataOutputStream.flush();
+                            } else if (message1.getMessageType() == Message.MESSAGE_GROUP){
+
+                            }
+
+                        }
+                        messageRepository.readMessage(name);
+                    }
+
 
                     System.out.println("message " + s);
 
                     if (messageType == Message.MESSAGE_FRIEND) {
                         if (concurrentHashMap.containsKey(messageTo)) {
-//                            String messageFrom = message.getMessageFrom();
-//                            message.setMessageFrom(message.getMessageTo());
-//                            message.setMessageTo(messageFrom);
                             DataOutputStream dataOutputStream = new DataOutputStream(concurrentHashMap.get(messageTo).socket.getOutputStream());
                             dataOutputStream.writeUTF(JSON.toJSONString(message));
                             dataOutputStream.flush();
-                            message.setMessageState(Message.MESSAGE_READ);
+                            message.setMessageState(Message.MESSAGE_SEND);
                         } else {
-                            message.setMessageState(Message.MESSAGE_NOT_READ);
+                            message.setMessageState(Message.MESSAGE_NOT_SEND);
                         }
                         messageRepository.save(message);
                     } else if (messageType == Message.MESSAGE_GROUP) {
                         List<Group> groupsByGroupSlave = groupRepository.findGroupsByGroupName(messageTo);
-                        for (Group group :groupsByGroupSlave) {
+                        for (Group group : groupsByGroupSlave) {
                             if (concurrentHashMap.containsKey(group.getGroupSlave())) {
                                 DataOutputStream dataOutputStream = new DataOutputStream(concurrentHashMap.get(group.getGroupSlave()).socket.getOutputStream());
                                 dataOutputStream.writeUTF(JSON.toJSONString(message));
                                 dataOutputStream.flush();
-                                message.setMessageState(Message.MESSAGE_READ);
+                                message.setMessageState(Message.MESSAGE_SEND);
                             } else {
-                                message.setMessageState(Message.MESSAGE_NOT_READ);
+                                message.setMessageState(Message.MESSAGE_NOT_SEND);
                             }
+                            System.out.println("group message "+JSON.toJSONString(message));
                             messageRepository.save(message);
                         }
 

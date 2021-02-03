@@ -15,7 +15,12 @@ object SocketOwner {
     var socket: Socket? = null
 
 
-    fun send(messageTo: String, messageData: String, messageType: Int = 2, messageState: Int = 1) {
+    fun send(
+        messageTo: String,
+        messageData: String,
+        messageType: Int = 2,
+        messageState: Int = 0
+    ) {
         val message = Message(
             App.username,
             messageTo,
@@ -32,9 +37,8 @@ object SocketOwner {
                 )
                 dataOutputStream.flush()
 
-                if (!TextUtils.equals(messageTo, App.username) && messageType== MESSAGE_FRIEND)
+                if (!TextUtils.equals(messageTo, App.username) && messageType == MESSAGE_FRIEND)
                     QiaDatabase.instance.messageDao().insertMessage(message)
-
 
             } catch (e: Exception) {
                 e.printStackTrace()

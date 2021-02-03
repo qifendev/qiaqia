@@ -43,19 +43,19 @@ class MainNewsAdapter(private val messageList: List<Message>, val context: Conte
 
         if (message.messageType == MESSAGE_FRIEND) {
             if (message.messageFrom == message.messageTo) {
-                holder.newName.text =message.messageTo
+                holder.newName.text = message.messageTo
             } else if (message.messageFrom == App.username) {
-                holder.newName.text =message.messageTo
+                holder.newName.text = message.messageTo
             } else if (message.messageTo == App.username) {
-                holder.newName.text =message.messageFrom
+                holder.newName.text = message.messageFrom
             }
         } else if (message.messageType == MESSAGE_GROUP) {
             if (message.messageFrom == App.username) {
-                holder.newName.text =message.messageTo
+                holder.newName.text = message.messageTo
             } else if (message.messageTo == App.username) {
-                holder.newName.text =message.messageFrom
+                holder.newName.text = message.messageFrom
             } else {
-                holder.newName.text =message.messageTo
+                holder.newName.text = message.messageTo
             }
         }
 

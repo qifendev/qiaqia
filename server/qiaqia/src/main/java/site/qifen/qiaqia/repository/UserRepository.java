@@ -1,6 +1,7 @@
 package site.qifen.qiaqia.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import site.qifen.qiaqia.data.User;
 
@@ -14,5 +15,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findUser(String text);
 
     User findUserByUserMail(String userMail);
+
+
+    @Modifying
+    @Query(nativeQuery = true, value = "update user set userAvatar=?1 where userMail=?2")
+    User modifyAvatar(String avatar);
 
 }

@@ -50,7 +50,6 @@ class LoginActivity : BaseActivity() {
                     try {
                         val login = ApiService.create(HttpRetrofit::class.java).login(name, pass)
                         if (login.code == 200) {
-
                             App.token = login.data
                             App.username = name
                             App.password = pass
@@ -59,7 +58,6 @@ class LoginActivity : BaseActivity() {
                             writePreference("username", name)
                             writePreference("password", pass)
                             unload()
-
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             finish()
                         }

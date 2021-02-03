@@ -59,10 +59,10 @@ class SearchActivity : BaseActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (notEmpty(query!!))
-                    try {
-                        val co = CoroutineScope(Dispatchers.Main)
-                        co.launch {
+                if (notEmpty(query!!)) {
+                    val co = CoroutineScope(Dispatchers.Main)
+                    co.launch {
+                        try {
                             val apiService = ApiService.create(HttpRetrofit::class.java)
                             when (checkOption) {
                                 1 -> {
@@ -70,7 +70,6 @@ class SearchActivity : BaseActivity() {
                                     if (findUser.code == 200) {
                                         val searchAdapter =
                                             SearchAdapter(findUser.data, this@SearchActivity)
-                                        if (findUser.data.isNotEmpty()) insertNotEq(findUser.data)
                                         findRecyclerView.adapter = searchAdapter
                                         searchAdapter.setOnItemClickListener(object :
                                             SearchAdapter.OnItemClickListener {
@@ -90,8 +89,6 @@ class SearchActivity : BaseActivity() {
                                                     )
                                                     t(addFriend.message)
                                                 }
-
-
                                             }
                                         })
                                     }
@@ -132,10 +129,11 @@ class SearchActivity : BaseActivity() {
 
                                 }
                             }
+                        } catch (e: Exception) {
+                            t(e.message.toString())
                         }
-                    } catch (e: Exception) {
-                        t(e.message.toString())
                     }
+                }
 
                 return false
             }
